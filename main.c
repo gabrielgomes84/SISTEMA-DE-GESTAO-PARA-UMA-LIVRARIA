@@ -3,8 +3,8 @@
 #include <locale.h>
 
 /////
-// Assinatura das funções
-void tela_menu_principal(void);  // Adicione a assinatura da função aqui
+// Assinatura das fun��es
+void tela_menu_principal(void);
 void tela_cadastrar_livro(void);
 void tela_gestao_estoque(void);
 void tela_registro_vendas(void);
@@ -13,32 +13,32 @@ void tela_relatorios(void);
 
 /////
 // Programa principal
-int main(void) {
+int main(void) {  setlocale(LC_ALL, "Portuguese_Brazil");
     setlocale(LC_ALL, "Portuguese");
     tela_menu_principal();
     return 0;
 }
 
 /////
-// Funções
+// Fun��es
 
-// Função de exibição do menu principal
+// Fun��o de exibi��o do menu principal
 void tela_menu_principal(void) {
     char op;
     while (1) {
         system("clear||cls");
         puts("///////////////////////////////////////////////////////////////////////////////");
         puts("///                                                                         ///");
-        puts("///            = = = = = = Sistema de Gestão para uma Livraria = = = = = =    ///");
+        puts("///            = = = = = = Sistema de Gest�o para uma Livraria = = = = = =    ///");
         puts("///                                                                         ///");
         puts("///            1. Cadastro de Livros e Produtos                               ///");
-        puts("///            2. Gestão de Estoque                                          ///");
+        puts("///            2. Gest�o de Estoque                                          ///");
         puts("///            3. Registro de Vendas de Livros                               ///");
         puts("///            4. Cadastro de Clientes                                       ///");
-        puts("///            5. Relatórios                                                 ///");
+        puts("///            5. Relat�rios                                                 ///");
         puts("///            0. Sair                                                       ///");
         puts("///                                                                         ///");
-        puts("///            Escolha a opção desejada: ");
+        puts("///            Escolha a op��o desejada: ");
         scanf(" %c", &op);
         getchar();
 
@@ -61,49 +61,49 @@ void tela_menu_principal(void) {
             case '0':
                 exit(0);
             default:
-                puts("Opção inválida. Pressione Enter para continuar...");
+                puts("Op��o inv�lida. Pressione Enter para continuar...");
                 getchar();
         }
     }
 }
 
 
-// Função de cadastro de livros e produtos
+// Fun��o de cadastro de livros e produtos
 void tela_cadastrar_livro(void) {
     system("clear||cls");
     // ...
     printf("///            = = = = = = = = Cadastrar Livro e Produto = = = = = = = =              ///\n");
     // ...
-    printf("///            Título do livro:                                               ///\n");
+    printf("///            T�tulo do livro:                                               ///\n");
     printf("///            Autor:                                                        ///\n");
     printf("///            Categoria:                                                    ///\n");
-    printf("///            Preço:                                                        ///\n");
+    printf("///            Pre�o:                                                        ///\n");
     printf("///            Quantidade em estoque:                                        ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
 }
 
-// Função de gestão de estoque
+// Fun��o de gest�o de estoque
 void tela_gestao_estoque(void) {
     system("clear||cls");
     // ...
-    printf("///            = = = = = = = = Gestão de Estoque = = = = = = = = =              ///\n");
+    printf("///            = = = = = = = = Gest�o de Estoque = = = = = = = = =              ///\n");
     // ...
-    printf("///            Informe o código do livro/produto:                            ///\n");
+    printf("///            Informe o c�digo do livro/produto:                            ///\n");
     printf("///            Nova quantidade em estoque:                                   ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
 }
 
-// Função de registro de vendas
+// Fun��o de registro de vendas
 void tela_registro_vendas(void) {
     system("clear||cls");
     // ...
     printf("///            = = = = = = = = Registro de Vendas de Livros = = = = = = = =              ///\n");
     // ...
-    printf("///            Informe o código do livro vendido:                            ///\n");
+    printf("///            Informe o c�digo do livro vendido:                            ///\n");
     printf("///            Quantidade vendida:                                           ///\n");
     printf("///            Valor total da venda:                                         ///\n");
     // ...
@@ -111,7 +111,7 @@ void tela_registro_vendas(void) {
     getchar();
 }
 
-// Função de cadastro de clientes
+// Fun��o de cadastro de clientes
 void tela_cadastrar_cliente(void) {
     system("clear||cls");
     // ...
@@ -125,15 +125,15 @@ void tela_cadastrar_cliente(void) {
     getchar();
 }
 
-// Função de relatórios
+// Fun��o de relat�rios
 void tela_relatorios(void) {
     system("clear||cls");
     // ...
-    printf("///            = = = = = = = = Relatórios = = = = = = = = =              ///\n");
+    printf("///            = = = = = = = = Relat�rios = = = = = = = = =              ///\n");
     // ...
-    printf("///            1. Relatório de Livros em Estoque                            ///\n");
-    printf("///            2. Relatório de Vendas                                        ///\n");
-    printf("///            3. Relatório de Clientes                                      ///\n");
+    printf("///            1. Relat�rio de Livros em Estoque                            ///\n");
+    printf("///            2. Relat�rio de Vendas                                        ///\n");
+    printf("///            3. Relat�rio de Clientes                                      ///\n");
     printf("///            0. Voltar ao menu anterior                                   ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
