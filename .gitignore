@@ -1,0 +1,39 @@
+# Compiled binary files
+*.o
+*.out
+*.exe
+
+# Object files
+*.obj
+
+# IDE or editor files
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+*.suo
+*.ncb
+*.sdf
+*.opensdf
+
+# Build directories
+build/
+dist/
+
+# Dependency directories
+libs/
+vendor/
+
+# Temporary and backup files
+*.tmp
+*.bak
+*.swp
+
+# Debug log files
+*.log
+debug.log
+
+# Configuration files (if sensitive or project-specific)
+config.ini
+settings.conf
