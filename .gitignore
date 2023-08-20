@@ -1,39 +1,53 @@
-# Compiled binary files
-*.o
-*.out
-*.exe
+# Prerequisites
+*.d
 
 # Object files
+*.o
+*.ko
 *.obj
+*.elf
 
-# IDE or editor files
-.vscode/
-.idea/
-*.suo
-*.user
-*.sln
-*.suo
-*.ncb
-*.sdf
-*.opensdf
+# Linker output
+*.ilk
+*.map
+*.exp
 
-# Build directories
-build/
-dist/
+# Precompiled Headers
+*.gch
+*.pch
 
-# Dependency directories
-libs/
-vendor/
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
 
-# Temporary and backup files
-*.tmp
-*.bak
-*.swp
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
 
-# Debug log files
-*.log
-debug.log
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+ls*
 
-# Configuration files (if sensitive or project-specific)
-config.ini
-settings.conf
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
