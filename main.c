@@ -36,7 +36,7 @@ void tela_menu_principal(void) {
         puts("///            5. Relatórios                                                 ///");
         puts("///            0. Sair                                                       ///");
         puts("///                                                                         ///");
-        puts("///            Escolha a op��o desejada: ");
+        puts("///            Escolha a opção desejada: ");
         scanf(" %c", &op);
         getchar();
 
