@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <locale.h>
 
-/////
 // Assinatura das funções
 void tela_menu_principal(void);
 void tela_cadastrar_livro(void);
@@ -11,9 +10,15 @@ void tela_registro_vendas(void);
 void tela_cadastrar_cliente(void);
 void tela_relatorios(void);
 
-/////
+// Função personalizada para ler um caractere
+int my_getchar(void) {
+    int c = getchar();
+    return c;
+}
+
 // Programa principal
-int main(void) {  setlocale(LC_ALL, "Portuguese_Brazil");
+int main(void) {
+    setlocale(LC_ALL, "Portuguese_Brazil");
     setlocale(LC_ALL, "Portuguese");
     tela_menu_principal();
     return 0;
@@ -72,11 +77,11 @@ void tela_cadastrar_livro(void) {
     // ...
     printf("///            = = = = = = = = Cadastrar Livro e Produto = = = = = = = =              ///\n");
     // ...
-    printf("///            Título do livro:                                               ///\n");
-    printf("///            Autor:                                                        ///\n");
-    printf("///            Categoria:                                                    ///\n");
-    printf("///            Preço:                                                        ///\n");
-    printf("///            Quantidade em estoque:                                        ///\n");
+    printf("///            1.Título do livro:                                               ///\n");
+    printf("///            2.Autor:                                                        ///\n");
+    printf("///            3.Categoria:                                                    ///\n");
+    printf("///            4.Preço:                                                        ///\n");
+    printf("///            5.Quantidade em estoque:                                        ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
@@ -88,8 +93,8 @@ void tela_gestao_estoque(void) {
     // ...
     printf("///            = = = = = = = = Gestão de Estoque = = = = = = = = =              ///\n");
     // ...
-    printf("///            Informe o código do livro/produto:                            ///\n");
-    printf("///            Nova quantidade em estoque:                                   ///\n");
+    printf("///            1.Informe o código do livro/produto:                            ///\n");
+    printf("///            2.Nova quantidade em estoque:                                   ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
@@ -101,9 +106,9 @@ void tela_registro_vendas(void) {
     // ...
     printf("///            = = = = = = = = Registro de Vendas de Livros = = = = = = = =              ///\n");
     // ...
-    printf("///            Informe o código do livro vendido:                            ///\n");
-    printf("///            Quantidade vendida:                                           ///\n");
-    printf("///            Valor total da venda:                                         ///\n");
+    printf("///            1.Informe o código do livro vendido:                            ///\n");
+    printf("///            2.Quantidade vendida:                                           ///\n");
+    printf("///            3.Valor total da venda:                                         ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
