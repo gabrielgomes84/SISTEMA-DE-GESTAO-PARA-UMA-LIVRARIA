@@ -30,18 +30,18 @@ void tela_menu_principal(void) {
     char op;
     while (1) {
         system("clear||cls");
-        printf("///////////////////////////////////////////////////////////////////////////////");
-        printf("///                                                                         ///");
-        printf("///            = = = = = = Sistema de Gestão para uma Livraria = = = = = =    ///");
-        printf("///                                                                         ///");
-        printf("///            1. Cadastro de Livros e Produtos                               ///");
-        printf("///            2. Gestão de Estoque                                          ///");
-        printf("///            3. Registro de Vendas de Livros                               ///");
-        printf("///            4. Cadastro de Clientes                                       ///");
-        printf("///            5. Relatórios                                                 ///");
-        printfs("///            0. Sair                                                       ///");
-        printfs("///                                                                         ///");
-        printf("///            Escolha a opção desejada: ");
+        puts("///////////////////////////////////////////////////////////////////////////////");
+        puts("///                                                                         ///");
+        puts("///            = = = = = = Sistema de Gestão para uma Livraria = = = = = =    ///");
+        puts("///                                                                         ///");
+        puts("///            1. Cadastro de Livros e Produtos                               ///");
+        puts("///            2. Gestão de Estoque                                          ///");
+        puts("///            3. Registro de Vendas de Livros                               ///");
+        puts("///            4. Cadastro de Clientes                                       ///");
+        puts("///            5. Relatórios                                                 ///");
+        puts("///            0. Sair                                                       ///");
+        puts("///                                                                         ///");
+        puts("///            Escolha a opção desejada: ");
         scanf(" %c", &op);
         getchar();
 
