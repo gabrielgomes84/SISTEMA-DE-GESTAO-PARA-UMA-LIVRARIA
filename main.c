@@ -30,18 +30,18 @@ void tela_menu_principal(void) {
     char op;
     while (1) {
         system("clear||cls");
-        puts("///////////////////////////////////////////////////////////////////////////////");
-        puts("///                                                                         ///");
-        puts("///            = = = = = = Sistema de Gestão para uma Livraria = = = = = =    ///");
-        puts("///                                                                         ///");
-        puts("///            1. Cadastro de Livros e Produtos                               ///");
-        puts("///            2. Gestão de Estoque                                          ///");
-        puts("///            3. Registro de Vendas de Livros                               ///");
-        puts("///            4. Cadastro de Clientes                                       ///");
-        puts("///            5. Relatórios                                                 ///");
-        puts("///            0. Sair                                                       ///");
-        puts("///                                                                         ///");
-        puts("///            Escolha a opção desejada: ");
+        printf("///////////////////////////////////////////////////////////////////////////////");
+        printf("///                                                                         ///");
+        printf("///            = = = = = = Sistema de Gestão para uma Livraria = = = = = =    ///");
+        printf("///                                                                         ///");
+        printf("///            1. Cadastro de Livros e Produtos                               ///");
+        printf("///            2. Gestão de Estoque                                          ///");
+        printf("///            3. Registro de Vendas de Livros                               ///");
+        printf("///            4. Cadastro de Clientes                                       ///");
+        printf("///            5. Relatórios                                                 ///");
+        printfs("///            0. Sair                                                       ///");
+        printfs("///                                                                         ///");
+        printf("///            Escolha a opção desejada: ");
         scanf(" %c", &op);
         getchar();
 
@@ -77,11 +77,11 @@ void tela_cadastrar_livro(void) {
     // ...
     printf("///            = = = = = = = = Cadastrar Livro e Produto = = = = = = = =              ///\n");
     // ...
-    printf("///            1.Título do livro:                                               ///\n");
-    printf("///            2.Autor:                                                        ///\n");
-    printf("///            3.Categoria:                                                    ///\n");
-    printf("///            4.Preço:                                                        ///\n");
-    printf("///            5.Quantidade em estoque:                                        ///\n");
+    printf("///            Título do livro:                                               ///\n");
+    printf("///            Autor:                                                        ///\n");
+    printf("///            Categoria:                                                    ///\n");
+    printf("///            Preço:                                                        ///\n");
+    printf("///            Quantidade em estoque:                                        ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
@@ -106,9 +106,9 @@ void tela_registro_vendas(void) {
     // ...
     printf("///            = = = = = = = = Registro de Vendas de Livros = = = = = = = =              ///\n");
     // ...
-    printf("///            1.Informe o código do livro vendido:                            ///\n");
-    printf("///            2.Quantidade vendida:                                           ///\n");
-    printf("///            3.Valor total da venda:                                         ///\n");
+    printf("///            Informe o código do livro vendido:                            ///\n");
+    printf("///            Quantidade vendida:                                           ///\n");
+    printf("///            Valor total da venda:                                         ///\n");
     // ...
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
