@@ -1,36 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
-#include "cadastro_livro.h"
-#include "gestao_estoque.h"
-#include "registro_vendas.h"
-#include "cadastro_cliente.h"
-#include "relatorios.h"
 
-// Assinatura das funções
-void tela_menu_principal(void);
-void tela_cadastrar_livro(void);
-void tela_gestao_estoque(void);
-void tela_registro_vendas(void);
-void tela_cadastrar_cliente(void);
-void tela_relatorios(void);
-
-// Função personalizada para ler um caractere
-int my_getchar(void) {
-    int c = getchar();
-    return c;
-}
-
-// Programa principal
-int main(void) {
-    setlocale(LC_ALL, "Portuguese_Brazil");
-    setlocale(LC_ALL, "Portuguese");
-    tela_menu_principal();
-    return 0;
-}
-
-/////
-// Funnções
+// Assinatura da função do menu principal
 void tela_menu_principal(void) {
     char op;
     while (1) {
