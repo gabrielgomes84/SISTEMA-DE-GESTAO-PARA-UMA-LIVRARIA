@@ -38,7 +38,7 @@ void tela_menu_principal(void) {
                 tela_relatorios();
                 break;
             case '0':
-                exit(0);
+                return; // Voltar ao menu principal
             default:
                 puts("Opção inválida. Pressione Enter para continuar...");
                 getchar();
