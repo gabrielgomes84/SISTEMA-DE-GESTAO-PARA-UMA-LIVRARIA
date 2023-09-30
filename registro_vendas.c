@@ -16,12 +16,7 @@ void tela_registro_vendas(void) {
     getchar();
 }
 
-// Implementação da função para registrar vendas
-
 void registrar_venda(int codigo_livro, int quantidade_vendida, float valor_total) {
     // Lógica para registrar vendas, por exemplo, salvar em um arquivo ou banco de dados
-    // ...
     printf("Venda registrada com sucesso!\n");
 }
-
-// Outras funções relacionadas ao registro de vendas

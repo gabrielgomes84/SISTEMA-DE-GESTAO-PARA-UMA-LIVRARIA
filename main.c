@@ -15,24 +15,36 @@ void tela_registro_vendas(void);
 void tela_cadastrar_cliente(void);
 void tela_relatorios(void);
 
+// Função personalizada para limpar a tela
+void clear_screen() {
+    system("cls"); // Para Windows
+}
+
 // Função personalizada para ler um caractere
 int my_getchar(void) {
     int c = getchar();
     return c;
 }
 
-// Programa principal
-int main(void) {
-    setlocale(LC_ALL, "Portuguese_Brazil");
-    setlocale(LC_ALL, "Portuguese");
-    char op; // Declare a variável op
-
-    do {
-        tela_menu_principal();
-        printf("Escolha a opção desejada: ");
-        scanf(" %c", &op); // Leia o valor de op do usuário
-        getchar();
-
+// Função para mostrar o menu principal
+void tela_menu_principal(void) {
+    char op;
+    clear_screen(); // Limpar a tela
+    printf("///////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                         ///\n");
+    printf("///            = = = = = = Sistema de Gestão para uma Livraria = = = = = =    ///\n");
+    printf("///                                                                         ///\n");
+    printf("///            1. Cadastro de Livros e Produtos                               ///\n");
+    printf("///            2. Gestão de Estoque                                          ///\n");
+    printf("///            3. Registro de Vendas de Livros                               ///\n");
+    printf("///            4. Cadastro de Clientes                                       ///\n");
+    printf("///            5. Relatórios                                                 ///\n");
+    printf("///            0. Sair                                                       ///\n");
+    printf("///                                                                         ///\n");
+    printf("///            Escolha a opção desejada: ");
+    scanf(" %c", &op);
+    getchar();
+    if (op >= '0' && op <= '5') {
         switch (op) {
             case '1':
                 tela_cadastrar_livro();
@@ -51,11 +63,23 @@ int main(void) {
                 break;
             case '0':
                 exit(0);
-            default:
-                puts("Opção inválida. Pressione Enter para continuar...");
-                getchar();
         }
-    } while (op != '0');
-    return 0;
+    } else {
+        printf("Opção inválida. Pressione Enter para continuar...");
+        getchar();
+    }
 }
 
+// Resto do seu código
+
+int main(void) {
+    setlocale(LC_ALL, "Portuguese_Brazil");
+    setlocale(LC_ALL, "Portuguese");
+    char op; // Declare a variável op
+
+    do {
+        tela_menu_principal();
+    } while (op != '0');
+    
+    return 0;
+}

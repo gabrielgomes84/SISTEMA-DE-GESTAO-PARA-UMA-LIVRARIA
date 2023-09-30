@@ -1,0 +1,27 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "compilar",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "cadastro_livro.c",
+                "gestao_estoque.c",
+                "registro_vendas.c",
+                "cadastro_cliente.c",
+                "relatorios.c",
+                "-o",
+                "main.exe" // Sem o diretório "output/"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}
