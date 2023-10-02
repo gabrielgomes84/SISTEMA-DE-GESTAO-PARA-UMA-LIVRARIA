@@ -21,4 +21,4 @@ Nesse módulo, é possível cadastrar informações sobre os clientes da livrari
 O sistema é capaz de gerar relatórios relevantes para o gerenciamento da livraria. Isso inclui relatórios sobre livros em estoque, vendas realizadas e informações sobre os clientes. Os relatórios auxiliam na tomada de decisões estratégicas.
 
 Versão
-0.5
+0.7

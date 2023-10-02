@@ -1,19 +1,14 @@
-// cadastro_cliente.c
 #include <stdio.h>
-#include "cadastro_cliente.h"
 #include <stdlib.h>
+#include "cadastro_cliente.h"
 
 void tela_cadastrar_cliente(void) {
     system("cls");
-    printf("///            = = = = = = = = Cadastrar Cliente = = = = = = = = =              ///\n");
-    printf("///            Nome completo do cliente:                                     ///\n");
-    printf("///            E-mail:                                                       ///\n");
-    printf("///            Telefone:                                                     ///\n");
+    printf("//        = = = = = = = = Cadastrar Cliente = = = = = = = = =              //\n");
+    printf("//        Nome completo do cliente:(Apenas Letras)                       //\n");
+    printf("//        E-mail:                                                       //\n");
+    printf("//        Telefone:                                                     //\n");
+    printf("//        CPF:                                                          //\n");
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar();
-}
-
-void cadastrar_cliente(const char *nome, const char *email, const char *telefone) {
-    // Lógica para cadastrar o cliente, por exemplo, salvar em um arquivo ou banco de dados
-    printf("Cliente cadastrado com sucesso!\n");
 }

@@ -1,7 +1,6 @@
-// registro_vendas.h
 #ifndef REGISTRO_VENDAS_H
 #define REGISTRO_VENDAS_H
 
-void registrar_venda(int codigo_livro, int quantidade_vendida, float valor_total);
+void tela_registro_vendas(void);
 
-#endif // REGISTRO_VENDAS_H
+#endif
