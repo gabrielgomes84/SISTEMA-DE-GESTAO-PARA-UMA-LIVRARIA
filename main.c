@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <string.h> // Adicionado para usar strlen
-#include <ctype.h>  // Adicionado para usar isdigit
+#include <string.h>
+#include <ctype.h>
 #include <windows.h>
 #include "cadastro_cliente.h"
 #include "cadastro_livro.h"
@@ -10,7 +10,6 @@
 #include "registro_vendas.h"
 #include "relatorios.h"
 
-// Implemente as funções de tela abaixo
 void tela_menu_principal(void) {
     char op;
     system("cls");
@@ -56,7 +55,7 @@ void tela_menu_principal(void) {
 int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
     setlocale(LC_ALL, "Portuguese");
-    char op = '1'; // Inicialize a variável op com '1'
+    char op = '1';
 
     while (op != '0') {
         tela_menu_principal();

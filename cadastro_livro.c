@@ -45,9 +45,9 @@ void tela_cadastrar_livro(void) {
 void tela_cadastrar_livro_cadastro(void) {
     system("cls");
     printf("//            = = = = = = = = Cadastrar Livro = = = = = = = = =              //\n");
-    
+
     Livro novoLivro;
-    int valido = 1; 
+    int valido = 1;
 
     do {
         printf("Título do livro: ");
@@ -69,9 +69,9 @@ void tela_cadastrar_livro_cadastro(void) {
             getchar();
             continue;
         }
-        break;  // Sai do loop se o autor for válido
+        break;  // aqui sai do loop se o autor for válido
 
-    } while (1);  // Loop infinito até obter dados válidos
+    } while (1);  // l.oop infinito até obter dados válidos
 
     do {
         printf("Categoria: ");
@@ -81,9 +81,9 @@ void tela_cadastrar_livro_cadastro(void) {
             getchar();
             continue;
         }
-        break;  // Sai do loop se a categoria for válida
+        break;  // ssai do loop se a categoria for válida
 
-    } while (1);  // Loop infinito até obter dados válidos
+    } while (1);  // loop infinito até obter dados válidos
 
     char precoStr[20];
     do {
@@ -111,15 +111,43 @@ void tela_cadastrar_livro_cadastro(void) {
             getchar();
         }
 
-    } while (1);  // Loop infinito até obter dados válidos
+    } while (1);  // loop infinito até obter dados válidos
 
     if (validarLivro(novoLivro)) {
+        salvarLivroBinario(novoLivro);  // aqui chama a função para salvar o livro em binário
         printf("Livro cadastrado com sucesso! Pressione Enter para retornar...");
     } else {
         printf("Dados do livro inválidos. Pressione Enter para retornar...");
     }
 
     getchar();
+}
+
+void salvarLivroBinario(Livro livro) {
+    FILE *arquivo = fopen("livros.dat", "ab");  // Abre o arquivo binário para adicionar ao final
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de livros.\n");
+        return;
+    }
+
+    fwrite(&livro, sizeof(Livro), 1, arquivo);
+
+    fclose(arquivo);
+}
+
+void carregarLivrosBinario(void) {
+    FILE *arquivo = fopen("livros.dat", "rb");  // Abre o arquivo binário para leitura
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de livros.\n");
+        return;
+    }
+
+    Livro livro;
+    while (fread(&livro, sizeof(Livro), 1, arquivo)) {
+        // Processar o livro carregado (por exemplo, exibir na tela)
+    }
+
+    fclose(arquivo);
 }
 
 

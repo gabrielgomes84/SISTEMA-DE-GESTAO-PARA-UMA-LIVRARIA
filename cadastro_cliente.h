@@ -3,14 +3,15 @@
 
 typedef struct {
     char email[100];
-    char cpf[15];  // Tamanho típico de um CPF no Brasil
+    char cpf[15];
     char nome[100];
+    char telefone[20];
 } Cliente;
 
-void tela_cadastrar_cliente(void);
-
-int validarEmail(const char *email);
-int validarCPF(const char *cpf);
-int validarCliente(Cliente cliente);
+void tela_cadastrar_cliente();
+void tela_cadastrar_cliente_editar();
+void tela_cadastrar_cliente_excluir();
+void tela_cadastrar_cliente_pesquisar();
+void salvarCliente(Cliente cliente);
 
 #endif
