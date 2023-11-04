@@ -36,28 +36,29 @@ void tela_relatorios(void) {
 }
 
 void gerar_relatorio_estoque() {
-    FILE *arquivo = fopen("livros.dat", "rb");
+    FILE *arquivo = fopen("livros.bin", "rb");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de livros.\n");
         return;
     }
 
     printf("Relatório de Livros em Estoque:\n");
-    printf("Título\tAutor\tCategoria\tPreço\tQuantidade em Estoque\n");
+    printf("%-25s %-25s %-20s %-10s %s\n", "Título", "Autor", "Categoria", "Preço", "Quantidade em Estoque");
+    printf("------------------------------------------------------------\n");
 
     Livro livro;
     while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
         if (livro.status == 0) {
-            printf("%s\t%s\t%s\t%.2f\t%d\n", livro.titulo, livro.autor, livro.categoria, livro.preco, livro.quantidadeEstoque);
+            printf("%-25s %-25s %-20s %-10.2f %d\n", livro.titulo, livro.autor, livro.categoria, livro.preco, livro.quantidadeEstoque);
         }
     }
 
     fclose(arquivo);
 
+    printf("------------------------------------------------------------\n");
     printf("Fim do Relatório. Pressione Enter para retornar...");
     getchar();
 }
-
 
 void gerar_relatorio_vendas() {
     // Lógica para gerar e imprimir o relatório de vendas

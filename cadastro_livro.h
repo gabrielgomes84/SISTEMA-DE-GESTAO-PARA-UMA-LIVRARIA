@@ -2,6 +2,7 @@
 #define CADASTRO_LIVRO_H
 
 typedef struct {
+    int id;
     char titulo[100];
     char autor[100];
     char categoria[100];
@@ -13,17 +14,18 @@ typedef struct {
 void tela_cadastrar_livro(void);
 void tela_cadastrar_livro_cadastro(void);
 void tela_cadastrar_livro_editar(void);
-void excluirLivroLogicoPorTitulo(void); // Função para exclusão lógica por título
-void excluirLivroFisico(void); // Função para exclusão física de todos os livros
-void recuperarLivroExcluido(void); // Função para recuperar livro excluído logicamente
+void excluirLivroLogicoPorID(void);
+void excluirLivroFisico(void);
+void recuperarLivroExcluidoPorID(void);
 void tela_cadastrar_livro_pesquisar(void);
+void limparBuffer();
 
 int validarLetras(const char *str);
 int validarNumeros(const char *str);
 int validarPreco(const char *preco);
 int validarLivro(Livro livro);
 
-void salvarLivroBinario(Livro livro); // Função para salvar livros em formato binário
-void carregarLivrosBinario(void); // Função para carregar livros a partir de arquivos binários
+void salvarLivroBinario(Livro livro);
+void carregarLivrosBinario(void);
 
 #endif

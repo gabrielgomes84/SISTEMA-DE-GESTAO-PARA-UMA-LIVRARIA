@@ -29,13 +29,13 @@ void tela_cadastrar_livro(void) {
                 tela_cadastrar_livro_editar();
                 break;
             case '3':
-                excluirLivroLogicoPorTitulo(); // Função para exclusão lógica
+                excluirLivroLogicoPorID(); // Função para exclusão lógica
                 break;
             case '4':
                 excluirLivroFisico(); // Função para exclusão física
                 break;
             case '5':
-                recuperarLivroExcluido(); // Função para recuperar livro excluído logicamente
+                recuperarLivroExcluidoPorID(); // Função para recuperar livro excluído logicamente
                 break;
             case '6':
                 tela_cadastrar_livro_pesquisar();
@@ -50,94 +50,86 @@ void tela_cadastrar_livro(void) {
     } while (op != '0');
 }
 
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void tela_cadastrar_livro_cadastro(void) {
     system("cls");
-    printf("//            = = = = = = = = Cadastrar Livro = = = = = = = = =              //\n");
-
+    printf("= = = = = = Cadastrar Livro = = = = = = =\n");
     Livro novoLivro;
-    int valido = 1;
 
-    do {
-        printf("Título do livro: ");
-        scanf(" %[^\n]", novoLivro.titulo);
-        if (!validarLetras(novoLivro.titulo)) {
-            printf("Título inválido. Pressione Enter para continuar...\n");
-            getchar();
-            continue;
-        }
-        break;  // Sai do loop se o título for válido
-    } while (1);  // Loop infinito até obter dados válidos
+    printf("Título do livro: ");
+    fgets(novoLivro.titulo, sizeof(novoLivro.titulo), stdin);
+    novoLivro.titulo[strcspn(novoLivro.titulo, "\n")] = 0; // Remover a quebra de linha
 
-    do {
-        printf("Autor: ");
-        scanf(" %[^\n]", novoLivro.autor);
-        if (!validarLetras(novoLivro.autor)) {
-            printf("Autor inválido. Pressione Enter para continuar...\n");
-            getchar();
-            continue;
-        }
-        break;  // aqui sai do loop se o autor for válido
-    } while (1);  // Loop infinito até obter dados válidos
+    printf("Autor: ");
+    fgets(novoLivro.autor, sizeof(novoLivro.autor), stdin);
+    novoLivro.autor[strcspn(novoLivro.autor, "\n")] = 0; // Remover a quebra de linha
 
-    do {
-        printf("Categoria: ");
-        scanf(" %[^\n]", novoLivro.categoria);
-        if (!validarLetras(novoLivro.categoria)) {
-            printf("Categoria inválida. Pressione Enter para continuar...\n");
-            getchar();
-            continue;
-        }
-        break;  // ssai do loop se a categoria for válida
-    } while (1);  // Loop infinito até obter dados válidos
+    printf("Categoria: ");
+    fgets(novoLivro.categoria, sizeof(novoLivro.categoria), stdin);
+    novoLivro.categoria[strcspn(novoLivro.categoria, "\n")] = 0; // Remover a quebra de linha
 
     char precoStr[20];
     do {
         printf("Preço: ");
-        scanf(" %[^\n]", precoStr);
+        fgets(precoStr, sizeof(precoStr), stdin);
+        precoStr[strcspn(precoStr, "\n")] = 0; // Remover a quebra de linha
         if (validarPreco(precoStr)) {
             novoLivro.preco = atof(precoStr);
-            break;  // Sai do loop se o preço for válido
+            break;
         } else {
             printf("Preço inválido. Pressione Enter para continuar...\n");
             getchar();
         }
-    } while (1);  // Loop infinito até obter dados válidos
+    } while (1);
 
     char quantidadeStr[10];
     do {
         printf("Quantidade em estoque: ");
-        scanf(" %[^\n]", quantidadeStr);
+        fgets(quantidadeStr, sizeof(quantidadeStr), stdin);
+        quantidadeStr[strcspn(quantidadeStr, "\n")] = 0; // Remover a quebra de linha
         if (validarNumeros(quantidadeStr)) {
             novoLivro.quantidadeEstoque = atoi(quantidadeStr);
-            break;  // Sai do loop se a quantidade for válida
+            break;
         } else {
             printf("Quantidade inválida. Pressione Enter para continuar...\n");
             getchar();
         }
-    } while (1);  // Loop infinito até obter dados válidos
+    } while (1);
+
+    novoLivro.status = 0; // Define o status como 0 para um novo livro ativo
+
+    do {
+        printf("ID do livro: ");
+        scanf("%d", &novoLivro.id);
+        if (novoLivro.id <= 0) {
+            printf("ID inválido. Deve ser um número positivo. Pressione Enter para continuar...\n");
+            getchar();
+        } else {
+            break;
+        }
+    } while (1);
 
     if (validarLivro(novoLivro)) {
-        salvarLivroBinario(novoLivro); // Função para salvar o livro em binário
+        salvarLivroBinario(novoLivro);
         printf("Livro cadastrado com sucesso!\n");
-        printf("Pressione Enter para retornar...");
-        getchar(); // Aguarda um Enter para retornar
     } else {
-        printf("Dados do livro inválidos. Pressione Enter para retornar...");
-        getchar();
+        printf("Dados do livro inválidos. Livro não cadastrado.\n");
     }
+    printf("Pressione Enter para retornar...");
+    limparBuffer();
 }
 
-void excluirLivroLogicoPorTitulo() {
-    char titulo[100];
-    printf("Digite o título do livro a ser excluído logicamente: ");
-    fgets(titulo, sizeof(titulo), stdin);
+void excluirLivroLogicoPorID() {
+    int idParaExcluir;
+    printf("Digite o ID do livro a ser excluído logicamente: ");
+    scanf("%d", &idParaExcluir);
+    limparBuffer();
 
-    int len = strlen(titulo);
-    if (len > 0 && titulo[len - 1] == '\n') {
-        titulo[len - 1] = '\0';
-    }
-
-    FILE *arquivo = fopen("livros.dat", "rb+");
+    FILE *arquivo = fopen("livros.bin", "rb+");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de livros.\n");
         return;
@@ -147,50 +139,43 @@ void excluirLivroLogicoPorTitulo() {
     int encontrado = 0;
 
     while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
-        if (livro.status == 0 && strcoll(livro.titulo, titulo) == 0) {
+        if (livro.id == idParaExcluir && livro.status == 0) {
             livro.status = 1; // Define o status como 1 para excluir logicamente
             fseek(arquivo, -sizeof(Livro), SEEK_CUR);
             fwrite(&livro, sizeof(Livro), 1, arquivo);
             encontrado = 1;
+            printf("Livro com ID %d excluído logicamente.\n", idParaExcluir);
             break;
         }
     }
 
     fclose(arquivo);
 
-    if (encontrado) {
-        printf("Livro excluído logicamente com sucesso!\n");
-    } else {
-        printf("Livro não encontrado ou já foi excluído logicamente.\n");
+    if (!encontrado) {
+        printf("Livro com ID %d não encontrado ou já foi excluído logicamente.\n", idParaExcluir);
     }
 
     printf("Pressione Enter para retornar...");
-    getchar();
+    limparBuffer();
 }
 
 void excluirLivroFisico() {
-    if (remove("livros.dat") == 0) {
+    if (remove("livros.bin") == 0) {
         printf("Todos os livros foram excluídos fisicamente.\n");
     } else {
-        printf("Erro ao excluir fisicamente os livros.\n");
+        printf("Erro ao excluir fisicamente os livros ou o arquivo não existe.\n");
     }
 
     printf("Pressione Enter para retornar...");
-    getchar();
+    limparBuffer();
 }
 
-void recuperarLivroExcluido() {
-    char titulo[100];
-    printf("Digite o título do livro a ser recuperado: ");
-    fgets(titulo, sizeof(titulo), stdin);
+void recuperarLivroExcluidoPorID() {
+    int idParaRecuperar;
+    printf("Digite o ID do livro a ser recuperado: ");
+    scanf("%d", &idParaRecuperar);
 
-    // Remova o caractere de nova linha (se existir) do título
-    int len = strlen(titulo);
-    if (len > 0 && titulo[len - 1] == '\n') {
-        titulo[len - 1] = '\0';
-    }
-
-    FILE *arquivo = fopen("livros.dat", "rb+");
+    FILE *arquivo = fopen("livros.bin", "rb+");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de livros.\n");
         return;
@@ -200,9 +185,9 @@ void recuperarLivroExcluido() {
     int encontrado = 0;
 
     while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
-        if (strcasecmp(livro.titulo, titulo) == 0 && livro.status == 1) {
+        if (livro.id == idParaRecuperar && livro.status == 1) {
             livro.status = 0; // Define o status como 0 para recuperar o livro
-            fseek(arquivo, -sizeof(Livro), SEEK_CUR); // Volta para a posição do registro
+            fseek(arquivo, -sizeof(Livro), SEEK_CUR);
             fwrite(&livro, sizeof(Livro), 1, arquivo);
             encontrado = 1;
             break;
@@ -222,7 +207,7 @@ void recuperarLivroExcluido() {
 }
 
 void salvarLivroBinario(Livro livro) {
-    FILE *arquivo = fopen("livros.dat", "ab");  // Abre o arquivo binário para adicionar ao final
+    FILE *arquivo = fopen("livros.bin", "ab");  // Abre o arquivo binário para adicionar ao final
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de livros.\n");
         return;
@@ -234,7 +219,7 @@ void salvarLivroBinario(Livro livro) {
 }
 
 void carregarLivrosBinario(void) {
-    FILE *arquivo = fopen("livros.dat", "rb");  // Abre o arquivo binário para leitura
+    FILE *arquivo = fopen("livros.bin", "rb");  // Abre o arquivo binário para leitura
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de livros.\n");
         return;
