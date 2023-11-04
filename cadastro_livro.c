@@ -12,8 +12,10 @@ void tela_cadastrar_livro(void) {
         printf("//        = = = = = = = = Cadastrar Livro e Produto = = = = = = = =       //\n");
         printf("1. Cadastrar Livro\n");
         printf("2. Editar Livro\n");
-        printf("3. Excluir Livro\n");
-        printf("4. Pesquisar Livro\n");
+        printf("3. Excluir Livro (Logicamente)\n");
+        printf("4. Excluir Todos os Livros (Fisicamente)\n");
+        printf("5. Recuperar Livro Excluído\n");
+        printf("6. Pesquisar Livro\n");
         printf("0. Voltar ao menu principal\n");
         printf("Escolha a opção desejada: ");
         scanf(" %c", &op);
@@ -27,9 +29,15 @@ void tela_cadastrar_livro(void) {
                 tela_cadastrar_livro_editar();
                 break;
             case '3':
-                tela_cadastrar_livro_excluir();
+                excluirLivroLogicoPorTitulo(); // Função para exclusão lógica
                 break;
             case '4':
+                excluirLivroFisico(); // Função para exclusão física
+                break;
+            case '5':
+                recuperarLivroExcluido(); // Função para recuperar livro excluído logicamente
+                break;
+            case '6':
                 tela_cadastrar_livro_pesquisar();
                 break;
             case '0':
@@ -58,7 +66,6 @@ void tela_cadastrar_livro_cadastro(void) {
             continue;
         }
         break;  // Sai do loop se o título for válido
-
     } while (1);  // Loop infinito até obter dados válidos
 
     do {
@@ -70,8 +77,7 @@ void tela_cadastrar_livro_cadastro(void) {
             continue;
         }
         break;  // aqui sai do loop se o autor for válido
-
-    } while (1);  // l.oop infinito até obter dados válidos
+    } while (1);  // Loop infinito até obter dados válidos
 
     do {
         printf("Categoria: ");
@@ -82,8 +88,7 @@ void tela_cadastrar_livro_cadastro(void) {
             continue;
         }
         break;  // ssai do loop se a categoria for válida
-
-    } while (1);  // loop infinito até obter dados válidos
+    } while (1);  // Loop infinito até obter dados válidos
 
     char precoStr[20];
     do {
@@ -96,7 +101,6 @@ void tela_cadastrar_livro_cadastro(void) {
             printf("Preço inválido. Pressione Enter para continuar...\n");
             getchar();
         }
-
     } while (1);  // Loop infinito até obter dados válidos
 
     char quantidadeStr[10];
@@ -110,16 +114,110 @@ void tela_cadastrar_livro_cadastro(void) {
             printf("Quantidade inválida. Pressione Enter para continuar...\n");
             getchar();
         }
-
-    } while (1);  // loop infinito até obter dados válidos
+    } while (1);  // Loop infinito até obter dados válidos
 
     if (validarLivro(novoLivro)) {
-        salvarLivroBinario(novoLivro);  // aqui chama a função para salvar o livro em binário
-        printf("Livro cadastrado com sucesso! Pressione Enter para retornar...");
+        salvarLivroBinario(novoLivro); // Função para salvar o livro em binário
+        printf("Livro cadastrado com sucesso!\n");
+        printf("Pressione Enter para retornar...");
+        getchar(); // Aguarda um Enter para retornar
     } else {
         printf("Dados do livro inválidos. Pressione Enter para retornar...");
+        getchar();
+    }
+}
+
+void excluirLivroLogicoPorTitulo() {
+    char titulo[100];
+    printf("Digite o título do livro a ser excluído logicamente: ");
+    fgets(titulo, sizeof(titulo), stdin);
+
+    int len = strlen(titulo);
+    if (len > 0 && titulo[len - 1] == '\n') {
+        titulo[len - 1] = '\0';
     }
 
+    FILE *arquivo = fopen("livros.dat", "rb+");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de livros.\n");
+        return;
+    }
+
+    Livro livro;
+    int encontrado = 0;
+
+    while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
+        if (livro.status == 0 && strcoll(livro.titulo, titulo) == 0) {
+            livro.status = 1; // Define o status como 1 para excluir logicamente
+            fseek(arquivo, -sizeof(Livro), SEEK_CUR);
+            fwrite(&livro, sizeof(Livro), 1, arquivo);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (encontrado) {
+        printf("Livro excluído logicamente com sucesso!\n");
+    } else {
+        printf("Livro não encontrado ou já foi excluído logicamente.\n");
+    }
+
+    printf("Pressione Enter para retornar...");
+    getchar();
+}
+
+void excluirLivroFisico() {
+    if (remove("livros.dat") == 0) {
+        printf("Todos os livros foram excluídos fisicamente.\n");
+    } else {
+        printf("Erro ao excluir fisicamente os livros.\n");
+    }
+
+    printf("Pressione Enter para retornar...");
+    getchar();
+}
+
+void recuperarLivroExcluido() {
+    char titulo[100];
+    printf("Digite o título do livro a ser recuperado: ");
+    fgets(titulo, sizeof(titulo), stdin);
+
+    // Remova o caractere de nova linha (se existir) do título
+    int len = strlen(titulo);
+    if (len > 0 && titulo[len - 1] == '\n') {
+        titulo[len - 1] = '\0';
+    }
+
+    FILE *arquivo = fopen("livros.dat", "rb+");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de livros.\n");
+        return;
+    }
+
+    Livro livro;
+    int encontrado = 0;
+
+    while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
+        if (strcasecmp(livro.titulo, titulo) == 0 && livro.status == 1) {
+            livro.status = 0; // Define o status como 0 para recuperar o livro
+            fseek(arquivo, -sizeof(Livro), SEEK_CUR); // Volta para a posição do registro
+            fwrite(&livro, sizeof(Livro), 1, arquivo);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (encontrado) {
+        printf("Livro recuperado com sucesso!\n");
+    } else {
+        printf("Livro não encontrado ou não foi excluído logicamente.\n");
+    }
+
+    printf("Pressione Enter para retornar...");
     getchar();
 }
 
@@ -149,7 +247,6 @@ void carregarLivrosBinario(void) {
 
     fclose(arquivo);
 }
-
 
 void tela_cadastrar_livro_editar(void) {
     system("cls");
