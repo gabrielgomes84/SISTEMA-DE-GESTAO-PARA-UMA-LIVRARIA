@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "relatorios.h": "c",
-        "ctype.h": "c"
+        "ctype.h": "c",
+        "cadastro_cliente.h": "c"
     }
 }

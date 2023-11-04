@@ -54,7 +54,6 @@ void tela_menu_principal(void) {
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese_Brazil");
-    setlocale(LC_ALL, "Portuguese");
     char op = '1';
 
     while (op != '0') {

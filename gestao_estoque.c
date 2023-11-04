@@ -5,7 +5,7 @@
 // Estrutura para representar um produto no estoque
 typedef struct {
     int codigo;  // Código do produto
-    int quantidade;  // Quantidade em estoque
+    int quantidade;  // quantidade em estoque
 } Produto;
 
 void tela_gestao_estoque(void) {
