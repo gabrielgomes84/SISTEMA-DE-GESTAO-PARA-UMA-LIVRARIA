@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h> // Adicione esta linha
 #include "cadastro_livro.h"
 #include "relatorios.h"
+#include "registro_vendas.h"
+
 
 void tela_relatorios(void) {
     system("cls");
@@ -61,7 +64,27 @@ void gerar_relatorio_estoque() {
 }
 
 void gerar_relatorio_vendas() {
-    // Lógica para gerar e imprimir o relatório de vendas
+    FILE *arquivo = fopen("vendas.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de vendas.\n");
+        return;
+    }
+
+    printf("Relatório de Vendas:\n");
+    printf("Título do Livro | Quantidade | Valor Total\n");
+    printf("----------------------------------------\n");
+
+    Venda venda;
+
+    while (fscanf(arquivo, "Título do livro: %99[^\n] | Quantidade: %d | Valor Total: %lf\n", venda.tituloLivro, &venda.quantidade, &venda.valorTotal) == 3) {
+        printf("%-15s | %-10d | %.2f\n", venda.tituloLivro, venda.quantidade, venda.valorTotal);
+    }
+
+    fclose(arquivo);
+
+    printf("----------------------------------------\n");
+    printf("Fim do Relatório. Pressione Enter para retornar...");
+    getchar();
 }
 
 void gerar_relatorio_clientes() {
