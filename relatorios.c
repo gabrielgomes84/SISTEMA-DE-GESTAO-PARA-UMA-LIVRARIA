@@ -63,9 +63,9 @@ void gerar_relatorio_estoque() {
     getchar();
 }
 
-void gerar_relatorio_vendas()
+void gerar_relatorio_vendas(){
   // em desenvolvimento
-
+}
 void gerar_relatorio_clientes() {
     // Lógica para gerar e imprimir o relatório de clientes
 }
