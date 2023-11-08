@@ -63,29 +63,8 @@ void gerar_relatorio_estoque() {
     getchar();
 }
 
-void gerar_relatorio_vendas() {
-    FILE *arquivo = fopen("vendas.txt", "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de vendas.\n");
-        return;
-    }
-
-    printf("Relatório de Vendas:\n");
-    printf("Título do Livro | Quantidade | Valor Total\n");
-    printf("----------------------------------------\n");
-
-    Venda venda;
-
-    while (fscanf(arquivo, "Título do livro: %99[^\n] | Quantidade: %d | Valor Total: %lf\n", venda.tituloLivro, &venda.quantidade, &venda.valorTotal) == 3) {
-        printf("%-15s | %-10d | %.2f\n", venda.tituloLivro, venda.quantidade, venda.valorTotal);
-    }
-
-    fclose(arquivo);
-
-    printf("----------------------------------------\n");
-    printf("Fim do Relatório. Pressione Enter para retornar...");
-    getchar();
-}
+void gerar_relatorio_vendas()
+  // em desenvolvimento
 
 void gerar_relatorio_clientes() {
     // Lógica para gerar e imprimir o relatório de clientes
