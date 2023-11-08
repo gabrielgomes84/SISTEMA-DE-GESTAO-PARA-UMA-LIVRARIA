@@ -1,5 +1,10 @@
 Sistema de Gestão para Livraria
-Criador: Gabriel Gomes
+
+Como compilar o programa: 
+gcc cadastro_cliente.c cadastro_livro.c main.c registro_vendas.c relatorios.c validacoes.c -o ProjetoLivraria
+
+./ProjetoLivraria
+
 
 Descrição do Projeto
 O "Sistema de Gestão para Livraria" é um projeto que visa criar uma aplicação de software para gerenciar os processos operacionais de uma livraria. O sistema foi desenvolvido com o objetivo de automatizar tarefas como cadastro de livros e produtos, gestão de estoque, registro de vendas, cadastro de clientes e geração de relatórios. Com a utilização dessa aplicação, a administração de uma livraria se torna mais eficiente e organizada, permitindo que os responsáveis pelo negócio tenham controle sobre as operações do dia a dia.
