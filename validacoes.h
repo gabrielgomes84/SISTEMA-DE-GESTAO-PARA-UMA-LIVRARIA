@@ -1,13 +1,14 @@
 #ifndef VALIDACOES_H
 #define VALIDACOES_H
 
-#include "cadastro_livro.h"  // Inclua o arquivo de cabeçalho que define a estrutura Livro
+#include "cadastro_livro.h"
 
 // Declaração de funções de validação
 int validarLetras(const char *str);
 int validarNumeros(const char *str);
 int validarPreco(const char *precoStr);
-int validarLivro(Livro livro);  // Agora pode usar a estrutura Livro
+int validarLivro(Livro livro);
 int validarCPF(const char *cpf);
+int validarEmail(const char *email);
 
 #endif

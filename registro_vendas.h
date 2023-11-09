@@ -2,12 +2,16 @@
 #define REGISTRO_VENDAS_H
 
 typedef struct {
-    char tituloLivro[100];  // Título do livro vendido
-    int quantidade;        // Quantidade vendida
-    double valorTotal;     // Valor total da venda
+    int id;
+    char titulo[50];
+    char autor[50];
+    char cliente[50];
+    float preco;
 } Venda;
 
-void tela_registro_vendas(void);
-void registrarVenda(const Venda venda);  // Definição atualizada da função
+void registrarUmaVenda(void);
+void ExcluirPeloID(void);
+void ExcluirTodasAsVendas(void);
+void tela_registrar_venda(void);
 
 #endif

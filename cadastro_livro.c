@@ -12,8 +12,8 @@ void tela_cadastrar_livro(void) {
         printf("//        = = = = = = = = Cadastrar Livro e Produto = = = = = = = =       //\n");
         printf("1. Cadastrar Livro\n");
         printf("2. Editar Livro\n");
-        printf("3. Excluir Livro (Logicamente)\n");
-        printf("4. Excluir Todos os Livros (Fisicamente)\n");
+        printf("3. Excluir Livro\n");
+        printf("4. Excluir Todos os Livros\n");
         printf("5. Recuperar Livro Excluído\n");
         printf("6. Pesquisar Livro\n");
         printf("0. Voltar ao menu principal\n");
@@ -125,7 +125,7 @@ void tela_cadastrar_livro_cadastro(void) {
 
 void excluirLivroLogicoPorID() {
     int idParaExcluir;
-    printf("Digite o ID do livro a ser excluído logicamente: ");
+    printf("Digite o ID do livro a ser excluído: ");
     scanf("%d", &idParaExcluir);
     limparBuffer();
 
@@ -161,9 +161,9 @@ void excluirLivroLogicoPorID() {
 
 void excluirLivroFisico() {
     if (remove("livros.bin") == 0) {
-        printf("Todos os livros foram excluídos fisicamente.\n");
+        printf("Todos os livros foram excluídos.\n");
     } else {
-        printf("Erro ao excluir fisicamente os livros ou o arquivo não existe.\n");
+        printf("Erro ao excluir os livros ou o arquivo não existe.\n");
     }
 
     printf("Pressione Enter para retornar...");
@@ -199,7 +199,7 @@ void recuperarLivroExcluidoPorID() {
     if (encontrado) {
         printf("Livro recuperado com sucesso!\n");
     } else {
-        printf("Livro não encontrado ou não foi excluído logicamente.\n");
+        printf("Livro não encontrado ou não foi excluído.\n");
     }
 
     printf("Pressione Enter para retornar...");
@@ -235,21 +235,119 @@ void carregarLivrosBinario(void) {
 
 void tela_cadastrar_livro_editar(void) {
     system("cls");
-    printf("//            = = = = = = = = Editar Livro = = = = = = = = =                  //\n");
+    printf("= = = = = = Editar Livro = = = = = = =\n");
+
+    int idParaEditar;
+    printf("Digite o ID do livro a ser editado: ");
+    scanf("%d", &idParaEditar);
+    limparBuffer();
+
+    FILE *arquivo = fopen("livros.bin", "rb+");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de livros.\n");
+        return;
+    }
+
+    Livro livro;
+    int encontrado = 0;
+
+    while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
+        if (livro.id == idParaEditar && livro.status == 0) {
+            encontrado = 1;
+
+            // Editar campos do livro
+            printf("Novo título: ");
+            fgets(livro.titulo, sizeof(livro.titulo), stdin);
+            livro.titulo[strcspn(livro.titulo, "\n")] = 0; // Remover a quebra de linha
+
+            printf("Novo autor: ");
+            fgets(livro.autor, sizeof(livro.autor), stdin);
+            livro.autor[strcspn(livro.autor, "\n")] = 0;
+
+            char precoStr[20];
+            do {
+                printf("Novo preço: ");
+                fgets(precoStr, sizeof(precoStr), stdin);
+                precoStr[strcspn(precoStr, "\n")] = 0;
+                if (validarPreco(precoStr)) {
+                    livro.preco = atof(precoStr);
+                    break;
+                } else {
+                    printf("Preço inválido. Pressione Enter para continuar...\n");
+                    getchar();
+                }
+            } while (1);
+
+            char quantidadeStr[10];
+            do {
+                printf("Nova quantidade em estoque: ");
+                fgets(quantidadeStr, sizeof(quantidadeStr), stdin);
+                quantidadeStr[strcspn(quantidadeStr, "\n")] = 0;
+                if (validarNumeros(quantidadeStr)) {
+                    livro.quantidadeEstoque = atoi(quantidadeStr);
+                    break;
+                } else {
+                    printf("Quantidade inválida. Pressione Enter para continuar...\n");
+                    getchar();
+                }
+            } while (1);
+
+            fseek(arquivo, -sizeof(Livro), SEEK_CUR);
+            fwrite(&livro, sizeof(Livro), 1, arquivo);
+
+            printf("Livro com ID %d editado com sucesso!\n", idParaEditar);
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrado) {
+        printf("Livro com ID %d não encontrado ou já foi excluído.\n", idParaEditar);
+    }
+
     printf("Pressione Enter para retornar...");
     getchar();
 }
 
-void tela_cadastrar_livro_excluir(void) {
-    system("cls");
-    printf("//            = = = = = = = = Excluir Livro = = = = = = = = =                  //\n");
-    printf("Pressione Enter para retornar...");
-    getchar();
-}
 
 void tela_cadastrar_livro_pesquisar(void) {
     system("cls");
-    printf("//            = = = = = = = = Pesquisar Livro = = = = = = = = =                  //\n");
+    printf("= = = = = = Pesquisar Livro = = = = = = =\n");
+
+    int idParaPesquisar;
+    printf("Digite o ID do livro a ser pesquisado: ");
+    scanf("%d", &idParaPesquisar);
+    limparBuffer();
+
+    FILE *arquivo = fopen("livros.bin", "rb");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de livros.\n");
+        return;
+    }
+
+    Livro livro;
+    int encontrado = 0;
+
+    while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
+        if (livro.id == idParaPesquisar && livro.status == 0) {
+            encontrado = 1;
+            printf("ID: %d\n", livro.id);
+            printf("Título: %s\n", livro.titulo);
+            printf("Autor: %s\n", livro.autor);
+            printf("Categoria: %s\n", livro.categoria);
+            printf("Preço: %.2lf\n", livro.preco);
+            printf("Quantidade em estoque: %d\n", livro.quantidadeEstoque);
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrado) {
+        printf("Livro com ID %d não encontrado ou já foi excluído.\n", idParaPesquisar);
+    }
+
     printf("Pressione Enter para retornar...");
     getchar();
 }

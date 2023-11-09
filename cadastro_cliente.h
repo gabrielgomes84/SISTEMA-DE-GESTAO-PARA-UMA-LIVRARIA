@@ -11,11 +11,18 @@ typedef struct {
 
 void tela_cadastrar_cliente();
 void tela_cadastrar_cliente_editar();
-void tela_cadastrar_cliente_excluir();
 void tela_cadastrar_cliente_pesquisar();
 void salvarCliente(Cliente cliente);
 void excluirClienteLogicoPorCPF();
 void excluirClienteFisico();
 void recuperarClientePorCPF();
+int editarClientePorCPF(char cpf[]);
+int pesquisarClientePorCPF(char cpf[]);
 
-#endif
+// Funções de validação
+int validarLetras(const char *str);
+int validarNumeros(const char *str);
+int validarCPF(const char *cpf);
+int validarEmail(const char *email);
+
+#endif // CADASTRO_CLIENTE_H

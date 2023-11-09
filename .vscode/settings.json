@@ -6,6 +6,8 @@
         "cadastro_cliente.h": "c",
         "gestao_estoque.h": "c",
         "cadastro_livro.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "validacoes.h": "c",
+        "string.h": "c"
     }
 }

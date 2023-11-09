@@ -34,7 +34,7 @@ int main() {
                 tela_cadastrar_livro();
                 break;
             case '2':
-                tela_registro_vendas();
+                tela_registrar_venda();
                 break;
             case '3':
                 tela_cadastrar_cliente();
