@@ -88,8 +88,8 @@ void tela_cadastrar_cliente() {
         printf("= = = = = = Cadastrar Cliente = = = = = = =\n");
         printf("1. Cadastrar cliente\n");
         printf("2. Editar cliente\n");
-        printf("3. Excluir cliente logicamente\n");
-        printf("4. Excluir todos os clientes fisicamente\n");
+        printf("3. Excluir cliente\n");
+        printf("4. Excluir todos os clientes\n");
         printf("5. Recuperar cliente\n");
         printf("6. Pesquisar cliente\n");
         printf("0. Voltar ao menu principal\n");
@@ -193,7 +193,7 @@ void tela_cadastrar_cliente_pesquisar() {
 
 void excluirClienteLogicoPorCPF() {
     char cpf[15];
-    printf("Digite o CPF do cliente a ser excluído logicamente: ");
+    printf("Digite o CPF do cliente a ser excluído: ");
     fgets(cpf, sizeof(cpf), stdin);
 
     FILE *arquivo = fopen("clientes.bin", "rb+");
@@ -218,7 +218,7 @@ void excluirClienteLogicoPorCPF() {
     fclose(arquivo);
 
     if (encontrado) {
-        printf("Cliente excluído logicamente com sucesso!\n");
+        printf("Cliente excluído com sucesso!\n");
     } else {
         printf("Cliente não encontrado.\n");
     }
@@ -229,7 +229,7 @@ void excluirClienteLogicoPorCPF() {
 
 void excluirClienteFisico() {
     if (remove("clientes.bin") == 0) {
-        printf("Todos os clientes foram excluídos fisicamente.\n");
+        printf("Todos os clientes foram excluídos.\n");
     } else {
         printf("Erro ao excluir os clientes.\n");
     }
