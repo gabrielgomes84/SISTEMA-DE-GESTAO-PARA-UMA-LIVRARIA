@@ -23,6 +23,7 @@ void cadastrarCliente() {
             return; // Voltar ao menu principal
         }
     }
+
     printf("E-mail: ");
     fgets(cliente.email, sizeof(cliente.email), stdin);
     cliente.email[strcspn(cliente.email, "\n")] = 0; // Remover a quebra de linha
@@ -56,6 +57,7 @@ void cadastrarCliente() {
             return; // Voltar ao menu principal
         }
     }
+
     printf("CPF: ");
     fgets(cliente.cpf, sizeof(cliente.cpf), stdin);
     cliente.cpf[strcspn(cliente.cpf, "\n")] = 0;
@@ -72,6 +74,10 @@ void cadastrarCliente() {
         }
     }
 
+    printf("Cidade: ");
+    fgets(cliente.cidade, sizeof(cliente.cidade), stdin);
+    cliente.cidade[strcspn(cliente.cidade, "\n")] = 0; // Remover a quebra de linha
+
     cliente.status = 0; // Define o status como 0 para um novo cliente ativo
 
     salvarCliente(cliente); // Salva os dados do cliente em um arquivo
@@ -80,6 +86,7 @@ void cadastrarCliente() {
     printf("Pressione Enter para voltar ao menu principal...");
     getchar();
 }
+
 
 void tela_cadastrar_cliente() {
     int opcao;

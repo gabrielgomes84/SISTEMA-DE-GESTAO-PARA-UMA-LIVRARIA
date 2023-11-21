@@ -35,8 +35,6 @@ void tela_registrar_venda() {
     } while (opcao != 0);
 }
 
-
-
 void registrarUmaVenda() {
     Venda novaVenda;
 
@@ -59,6 +57,13 @@ void registrarUmaVenda() {
     printf("Digite o preço do livro: ");
     scanf("%f", &novaVenda.preco);
 
+    printf("Digite a data da venda (DD/MM/AAAA): ");
+    scanf("%9[^\n]", novaVenda.data);
+    getchar(); // Limpar o buffer
+
+    printf("Digite a quantidade do livro vendido: ");
+    scanf("%d", &novaVenda.quantidade);
+
     // Abrir o arquivo para escrita (modo "a" para adicionar ao final)
     FILE *arquivo = fopen("vendas.txt", "a");
 
@@ -68,24 +73,24 @@ void registrarUmaVenda() {
     }
 
     // Salvar a venda no arquivo
-    fprintf(arquivo, "%d;%s;%s;%s;%.2f\n", novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente, novaVenda.preco);
+    fprintf(arquivo, "%d;%s;%s;%s;%.2f;%s;%d\n", novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente, novaVenda.preco, novaVenda.data, novaVenda.quantidade);
 
     // Fechar o arquivo
     fclose(arquivo);
 
     // Exemplo de como imprimir os dados da venda
     printf("Venda registrada e salva em vendas.txt:\n");
-    printf("ID: %d\nTítulo: %s\nAutor: %s\nCliente: %s\nPreço: %.2f\n", novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente, novaVenda.preco);
+    printf("ID: %d\nTítulo: %s\nAutor: %s\nCliente: %s\nPreço: %.2f\nData: %s\nQuantidade: %d\n", novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente, novaVenda.preco, novaVenda.data, novaVenda.quantidade);
 
     printf("Pressione Enter para retornar...");
     getchar(); // Aguarda o Enter
 }
 
-
 void ExcluirPeloID() {
     int idExcluir;
     printf("Digite o ID da venda a ser excluída: ");
     scanf("%d", &idExcluir);
+    getchar(); // Limpar o buffer
 
     // Abrir o arquivo para leitura e um arquivo temporário para escrita
     FILE *arquivo = fopen("vendas.txt", "r");
@@ -99,9 +104,9 @@ void ExcluirPeloID() {
     Venda vendaAtual;
 
     // Ler as vendas do arquivo, copiando para o arquivo temporário, exceto a que queremos excluir
-    while (fscanf(arquivo, "%d;%49[^;];%49[^;];%49[^;];%f\n", &vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, &vendaAtual.preco) == 5) {
+    while (fscanf(arquivo, "%d;%49[^;];%49[^;];%49[^;];%f;%9[^;];%d\n", &vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, &vendaAtual.preco, vendaAtual.data, &vendaAtual.quantidade) == 7) {
         if (vendaAtual.id != idExcluir) {
-            fprintf(arquivoTemp, "%d;%s;%s;%s;%.2f\n", vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, vendaAtual.preco);
+            fprintf(arquivoTemp, "%d;%s;%s;%s;%.2f;%s;%d\n", vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, vendaAtual.preco, vendaAtual.data, vendaAtual.quantidade);
         }
     }
 

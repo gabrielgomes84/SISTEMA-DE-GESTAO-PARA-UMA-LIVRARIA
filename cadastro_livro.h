@@ -1,3 +1,4 @@
+// cadastro_livro.h
 #ifndef CADASTRO_LIVRO_H
 #define CADASTRO_LIVRO_H
 
@@ -6,6 +7,8 @@ typedef struct {
     char titulo[100];
     char autor[100];
     char categoria[100];
+    char genero[100];  // Novo membro adicionado
+    char editora[100]; // Novo membro adicionado
     double preco;
     int quantidadeEstoque;
     int status; // Campo para indicar se o registro está excluído (0 para ativo, 1 para excluído logicamente)
@@ -28,4 +31,4 @@ int validarLivro(Livro livro);
 void salvarLivroBinario(Livro livro);
 void carregarLivrosBinario(void);
 
-#endif
+#endif // CADASTRO_LIVRO_H

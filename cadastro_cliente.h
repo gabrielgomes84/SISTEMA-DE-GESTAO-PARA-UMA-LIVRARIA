@@ -1,3 +1,4 @@
+// cadastro_cliente.h
 #ifndef CADASTRO_CLIENTE_H
 #define CADASTRO_CLIENTE_H
 
@@ -6,6 +7,7 @@ typedef struct {
     char cpf[15];
     char nome[100];
     char telefone[20];
+    char cidade[50];  // Membro cidade adicionado
     int status; // Campo para indicar se o registro está excluído (0 para ativo, 1 para excluído logicamente)
 } Cliente;
 
