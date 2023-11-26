@@ -9,9 +9,9 @@ void tela_registrar_venda() {
     do {
         system("cls");
         printf("= = = = = = Registrar vendas = = = = = = =\n");
-        printf("1. Registre uma venda\n"); // aqui precisa pedir um ID pra venda
+        printf("1. Registre uma venda\n");
         printf("2. Excluir uma venda pelo ID\n");
-        printf("3. Excluir todas as venda\n");
+        printf("3. Excluir todas as vendas\n");
         printf("0. Voltar ao menu principal\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -40,7 +40,7 @@ void registrarUmaVenda() {
 
     printf("Digite o ID da venda: ");
     scanf("%d", &novaVenda.id);
-    getchar(); // Limpar o buffer
+    limparBuffer(); // Limpar o buffer
 
     printf("Digite o título do livro: ");
     fgets(novaVenda.titulo, sizeof(novaVenda.titulo), stdin);
@@ -56,16 +56,22 @@ void registrarUmaVenda() {
 
     printf("Digite o preço do livro: ");
     scanf("%f", &novaVenda.preco);
+    limparBuffer(); // Limpar o buffer
 
-    printf("Digite a data da venda (DD/MM/AAAA): ");
-    scanf("%9[^\n]", novaVenda.data);
-    getchar(); // Limpar o buffer
+    // Solicitar a data sem barras
+    printf("Digite a data da venda (DDMMAAAA, sem barras): ");
+    scanf("%8s", novaVenda.data);
+    limparBuffer(); // Limpar o buffer
+
+    // Alerta ao usuário
+    printf("Aviso: Digite a data sem barras (DDMMAAAA).\n");
 
     printf("Digite a quantidade do livro vendido: ");
     scanf("%d", &novaVenda.quantidade);
+    limparBuffer(); // Limpar o buffer
 
-    // Abrir o arquivo para escrita (modo "a" para adicionar ao final)
-    FILE *arquivo = fopen("vendas.txt", "a");
+    // Abrir o arquivo para escrita binária (modo "ab" para adicionar ao final)
+    FILE *arquivo = fopen("vendas.bin", "ab");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de vendas.\n");
@@ -73,18 +79,21 @@ void registrarUmaVenda() {
     }
 
     // Salvar a venda no arquivo
-    fprintf(arquivo, "%d;%s;%s;%s;%.2f;%s;%d\n", novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente, novaVenda.preco, novaVenda.data, novaVenda.quantidade);
+    fwrite(&novaVenda, sizeof(Venda), 1, arquivo);
 
     // Fechar o arquivo
     fclose(arquivo);
 
     // Exemplo de como imprimir os dados da venda
-    printf("Venda registrada e salva em vendas.txt:\n");
-    printf("ID: %d\nTítulo: %s\nAutor: %s\nCliente: %s\nPreço: %.2f\nData: %s\nQuantidade: %d\n", novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente, novaVenda.preco, novaVenda.data, novaVenda.quantidade);
+    printf("Venda registrada e salva em vendas.bin:\n");
+    printf("ID: %d\nTítulo: %s\nAutor: %s\nCliente: %s\nPreço: %.2f\nData: %.8s\nQuantidade: %d\n",
+        novaVenda.id, novaVenda.titulo, novaVenda.autor, novaVenda.cliente,
+        novaVenda.preco, novaVenda.data, novaVenda.quantidade);
 
     printf("Pressione Enter para retornar...");
-    getchar(); // Aguarda o Enter
+    limparBuffer(); // Aguarda o Enter
 }
+
 
 void ExcluirPeloID() {
     int idExcluir;
@@ -92,9 +101,9 @@ void ExcluirPeloID() {
     scanf("%d", &idExcluir);
     getchar(); // Limpar o buffer
 
-    // Abrir o arquivo para leitura e um arquivo temporário para escrita
-    FILE *arquivo = fopen("vendas.txt", "r");
-    FILE *arquivoTemp = fopen("temp.txt", "w");
+    // Abrir o arquivo para leitura binária e um arquivo temporário para escrita binária
+    FILE *arquivo = fopen("vendas.bin", "rb");
+    FILE *arquivoTemp = fopen("temp.bin", "wb");
 
     if (arquivo == NULL || arquivoTemp == NULL) {
         printf("Erro ao abrir os arquivos.\n");
@@ -104,9 +113,9 @@ void ExcluirPeloID() {
     Venda vendaAtual;
 
     // Ler as vendas do arquivo, copiando para o arquivo temporário, exceto a que queremos excluir
-    while (fscanf(arquivo, "%d;%49[^;];%49[^;];%49[^;];%f;%9[^;];%d\n", &vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, &vendaAtual.preco, vendaAtual.data, &vendaAtual.quantidade) == 7) {
+    while (fread(&vendaAtual, sizeof(Venda), 1, arquivo) == 1) {
         if (vendaAtual.id != idExcluir) {
-            fprintf(arquivoTemp, "%d;%s;%s;%s;%.2f;%s;%d\n", vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, vendaAtual.preco, vendaAtual.data, vendaAtual.quantidade);
+            fwrite(&vendaAtual, sizeof(Venda), 1, arquivoTemp);
         }
     }
 
@@ -115,8 +124,8 @@ void ExcluirPeloID() {
     fclose(arquivoTemp);
 
     // Remover o arquivo original e renomear o temporário
-    remove("vendas.txt");
-    rename("temp.txt", "vendas.txt");
+    remove("vendas.bin");
+    rename("temp.bin", "vendas.bin");
 
     printf("Venda excluída com sucesso.\n");
     printf("Pressione Enter para retornar...");
@@ -124,8 +133,8 @@ void ExcluirPeloID() {
 }
 
 void ExcluirTodasAsVendas() {
-    // Abrir o arquivo para escrita (modo "w" para criar um novo arquivo vazio)
-    FILE *arquivo = fopen("vendas.txt", "w");
+    // Abrir o arquivo para escrita binária (modo "wb" para criar um novo arquivo vazio)
+    FILE *arquivo = fopen("vendas.bin", "wb");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de vendas.\n");

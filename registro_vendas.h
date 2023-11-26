@@ -1,4 +1,3 @@
-// registro_vendas.h
 #ifndef REGISTRO_VENDAS_H
 #define REGISTRO_VENDAS_H
 
@@ -8,8 +7,8 @@ typedef struct {
     char autor[50];
     char cliente[50];
     float preco;
-    char data[11]; // Novo membro adicionado (formato DD/MM/AAAA)
-    int quantidade; // Novo membro adicionado
+    char data[9]; // Atualizado para o formato DDMMAAAA
+    int quantidade;
 } Venda;
 
 void registrarUmaVenda(void);

@@ -1,12 +1,15 @@
+// relatorios.h
 #ifndef RELATORIOS_H
 #define RELATORIOS_H
+
+#include "registro_vendas.h"
 
 typedef struct {
     char genero[50];
 } FiltroLivro;
 
 typedef struct {
-    char data[11];
+    char data[9];
 } FiltroVenda;
 
 typedef struct {
@@ -19,7 +22,4 @@ void gerar_relatorio_estoque(FiltroLivro filtroLivro);
 void gerar_relatorio_vendas(FiltroVenda filtroVenda);
 void gerar_relatorio_clientes(FiltroCliente filtroCliente);
 
-int compararDatas(const char *data1, const char *data2);
-
-#endif
-
+#endif // RELATORIOS_H

@@ -6,7 +6,6 @@
 #include "registro_vendas.h"
 #include "cadastro_cliente.h"
 
-
 void gerar_relatorio_estoque(FiltroLivro filtroLivro) {
     FILE *arquivo = fopen("livros.bin", "rb");
     if (arquivo == NULL) {
@@ -33,57 +32,49 @@ void gerar_relatorio_estoque(FiltroLivro filtroLivro) {
     getchar();
 }
 
-int compararDatas(const char *data1, const char *data2) {
-    // Converte as datas para o formato numérico AAAAMMDD para comparação
-    int numData1, numData2;
-    sscanf(data1, "%4d%2d%2d", &numData1);
-    sscanf(data2, "%4d%2d%2d", &numData2);
-
-    if (numData1 < numData2) {
-        return -1;
-    } else if (numData1 > numData2) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
 
 void gerar_relatorio_vendas(FiltroVenda filtroVenda) {
-    FILE *arquivo = fopen("vendas.txt", "r");
+    FILE *arquivo = fopen("vendas.bin", "rb");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de vendas.\n");
         return;
     }
 
     printf("Relatório de Vendas:\n");
-    printf("%-10s %-25s %-25s %-25s %-10s %s\n", "ID", "Título", "Autor", "Cliente", "Preço", "Data");
-    printf("---------------------------------------------------------------------------------------------------------------------\n");
-
+    
     Venda vendaAtual;
-    char dataUsuario[11]; // Para armazenar a data informada pelo usuário
 
-    // Solicitar a data ao usuário
-    printf("Digite a data desejada (DD/MM/AAAA): ");
-    while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
-    fgets(dataUsuario, sizeof(dataUsuario), stdin);
-    dataUsuario[strcspn(dataUsuario, "\n")] = '\0'; // Remover a quebra de linha
+    int vendasLidas = 0;
+    int vendasAtendendoFiltro = 0;
 
-    while (fscanf(arquivo, "%d;%49[^;];%49[^;];%49[^;];%f;%10[^;];%d\n", &vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, &vendaAtual.preco, vendaAtual.data, &vendaAtual.quantidade) == 7) {
+    while (fread(&vendaAtual, sizeof(Venda), 1, arquivo) == 1) {
+        vendasLidas++;
+
         // Verificar se a data informada pelo usuário corresponde à data da venda
-        if (strcmp(vendaAtual.data, dataUsuario) == 0) {
-            printf("ID: %d, Título: %s, Autor: %s, Cliente: %s, Preço: %.2f, Data: %s, Quantidade: %d\n", vendaAtual.id, vendaAtual.titulo, vendaAtual.autor, vendaAtual.cliente, vendaAtual.preco, vendaAtual.data, vendaAtual.quantidade);
+        if (strncmp(vendaAtual.data, filtroVenda.data, 8) == 0) {
+            vendasAtendendoFiltro++;
+
+            // Imprimir os dados da venda um abaixo do outro
+            printf("Cliente: %s\n", vendaAtual.cliente);
+            printf("Título: %s\n", vendaAtual.titulo);
+            printf("Autor: %s\n", vendaAtual.autor);
+            printf("Preço: %.2f\n", vendaAtual.preco);
+            printf("Data: %s\n", vendaAtual.data);
+            printf("Quantidade: %d\n", vendaAtual.quantidade);
+
+            // Adiciona uma linha em branco entre cada venda
+            printf("\n");
         }
     }
 
     fclose(arquivo);
 
-    printf("---------------------------------------------------------------------------------------------------------------------\n");
+    printf("Vendas lidas: %-4d\n", vendasLidas);
+    printf("Vendas atendendo à condição de data: %-4d\n", vendasAtendendoFiltro);
     printf("Fim do Relatório. Pressione Enter para retornar...");
 
     getchar(); // Aguarde a tecla Enter
 }
-
 
 void gerar_relatorio_clientes(FiltroCliente filtroCliente) {
     FILE *arquivo = fopen("clientes.bin", "rb");
@@ -119,11 +110,12 @@ void gerar_relatorio_clientes(FiltroCliente filtroCliente) {
     fclose(arquivo);
     free(clientes);
 
+    getchar(); // Aguarde a tecla Enter
 }
 
-
 void tela_relatorios(void) {
-    system("cls");
+    system("cls"); // Limpar a tela
+
     printf("//        = = = = = = = = Relatórios = = = = = = = = =              //\n");
     printf("//        1. Relatório de Livros em Estoque                            //\n");
     printf("//        2. Relatório de Vendas                                        //\n");
@@ -140,25 +132,41 @@ void tela_relatorios(void) {
             printf("Digite o gênero do livro: ");
             while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
             fgets(filtroLivro.genero, sizeof(filtroLivro.genero), stdin);
-            filtroLivro.genero[strcspn(filtroLivro.genero, "\n")] = 0; // Remover a quebra de linha
+            filtroLivro.genero[strcspn(filtroLivro.genero, "\n")] = '\0'; // Remover a quebra de linha
             gerar_relatorio_estoque(filtroLivro);
             break;
         }
-    case '2': {
-        FiltroVenda filtroVenda;
-        printf("Digite a data desejada (DD/MM/AAAA): ");
-        while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
-        fgets(filtroVenda.data, sizeof(filtroVenda.data), stdin);
-        filtroVenda.data[strcspn(filtroVenda.data, "\n")] = '\0'; // Remover a quebra de linha
-        gerar_relatorio_vendas(filtroVenda);
+case '2': {
+    FiltroVenda filtroVenda;
+    printf("Digite a data desejada (DDMMAAAA): ");
+
+    // Limpar o buffer antes de ler a entrada
+    while (getchar() != '\n');
+
+    // Ler a data
+    if (fgets(filtroVenda.data, sizeof(filtroVenda.data), stdin) == NULL) {
+        printf("Erro ao ler a data.\n");
         break;
     }
+
+    // Remover a quebra de linha
+    filtroVenda.data[strcspn(filtroVenda.data, "\n")] = '\0';
+
+    // Chamar a função
+    gerar_relatorio_vendas(filtroVenda);
+
+    // Pausar a execução e aguardar a tecla Enter
+    printf("Pressione Enter para retornar...");
+    getchar(); // Aguardar a tecla Enter
+
+    break;
+}
         case '3': {
             FiltroCliente filtroCliente;
             printf("Digite a cidade: ");
             while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
             fgets(filtroCliente.cidade, sizeof(filtroCliente.cidade), stdin);
-            filtroCliente.cidade[strcspn(filtroCliente.cidade, "\n")] = 0; // Remover a quebra de linha
+            filtroCliente.cidade[strcspn(filtroCliente.cidade, "\n")] = '\0'; // Remover a quebra de linha
             gerar_relatorio_clientes(filtroCliente);
             break;
         }
@@ -171,7 +179,4 @@ void tela_relatorios(void) {
             getchar(); // Aguardar a tecla Enter
             break;
     }
-
-    printf("Pressione Enter para retornar ao menu anterior...");
-    getchar(); // Aguardar a tecla Enter
 }
