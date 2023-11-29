@@ -6,6 +6,14 @@
 #include "registro_vendas.h"
 #include "cadastro_cliente.h"
 
+void liberar_lista_livros(NodoLivro* lista) {
+    while (lista != NULL) {
+        NodoLivro* temp = lista;
+        lista = lista->proximo;
+        free(temp);
+    }
+}
+
 void gerar_relatorio_estoque(FiltroLivro filtroLivro) {
     FILE *arquivo = fopen("livros.bin", "rb");
     if (arquivo == NULL) {
@@ -13,25 +21,41 @@ void gerar_relatorio_estoque(FiltroLivro filtroLivro) {
         return;
     }
 
-    printf("Relatório de Livros em Estoque:\n");
-    printf("%-25s %-25s %-20s %-10s %s\n", "Título", "Autor", "Categoria", "Preço", "Quantidade em Estoque");
-    printf("------------------------------------------------------------\n");
+    // Criação da lista dinâmica
+    NodoLivro* listaLivros = NULL;
 
     Livro livro;
     while (fread(&livro, sizeof(Livro), 1, arquivo) == 1) {
-        // Se o livro estiver ativo e a categoria contiver o filtro, exiba-o
+        // Se o livro estiver ativo e a categoria contiver o filtro, adicione-o à lista
         if (livro.status == 0 && strstr(livro.categoria, filtroLivro.genero) != NULL) {
-            printf("%-25s %-25s %-20s %-10.2f %d\n", livro.titulo, livro.autor, livro.categoria, livro.preco, livro.quantidadeEstoque);
+            NodoLivro* novoNodo = (NodoLivro*)malloc(sizeof(NodoLivro));
+            novoNodo->livro = livro;
+            novoNodo->proximo = listaLivros;
+            listaLivros = novoNodo;
         }
     }
 
     fclose(arquivo);
 
+    // Imprime os resultados
+    printf("Relatório de Livros em Estoque:\n");
+    printf("%-25s %-25s %-20s %-10s %s\n", "Título", "Autor", "Categoria", "Preço", "Quantidade em Estoque");
+    printf("------------------------------------------------------------\n");
+
+    NodoLivro* atual = listaLivros;
+    while (atual != NULL) {
+        Livro livroAtual = atual->livro;
+        printf("%-25s %-25s %-20s %-10.2f %d\n", livroAtual.titulo, livroAtual.autor, livroAtual.categoria, livroAtual.preco, livroAtual.quantidadeEstoque);
+        atual = atual->proximo;
+    }
+
+    // Libera a memória alocada para a lista dinâmica
+    liberar_lista_livros(listaLivros);
+
     printf("------------------------------------------------------------\n");
     printf("Fim do Relatório. Pressione Enter para retornar...");
     getchar();
 }
-
 
 void gerar_relatorio_vendas(FiltroVenda filtroVenda) {
     FILE *arquivo = fopen("vendas.bin", "rb");

@@ -8,6 +8,7 @@
         "cadastro_livro.h": "c",
         "stdlib.h": "c",
         "validacoes.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "registro_vendas.h": "c"
     }
 }
