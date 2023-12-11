@@ -1,9 +1,9 @@
-
 #ifndef RELATORIOS_H
 #define RELATORIOS_H
 
 #include "registro_vendas.h"
 #include "cadastro_livro.h"
+#include "cadastro_cliente.h" // Adicione esta linha para incluir as definições necessárias
 
 typedef struct {
     char genero[50];
@@ -18,18 +18,26 @@ typedef struct {
     char estado[50];
 } FiltroCliente;
 
-// Definição da estrutura do nó da lista de livros
+typedef struct {
+    char ordenacao; // 'C' para ordem de cadastramento, 'A' para ordem alfabética
+} OpcoesRelatorio;
+
 typedef struct NodoLivro {
     Livro livro;
     struct NodoLivro* proximo;
 } NodoLivro;
 
-void tela_relatorios(void);
-void gerar_relatorio_estoque(FiltroLivro filtroLivro);
-void gerar_relatorio_vendas(FiltroVenda filtroVenda);
-void gerar_relatorio_clientes(FiltroCliente filtroCliente);
+// Adicione a definição da estrutura NodoCliente
+typedef struct NodoCliente {
+    Cliente cliente;
+    struct NodoCliente* proximo;
+} NodoCliente;
 
-// Função para liberar a memória da lista dinâmica de livros
+void tela_relatorios(void);
+void gerar_relatorio_estoque(FiltroLivro filtroLivro, OpcoesRelatorio opcoes);
+void gerar_relatorio_vendas(FiltroVenda filtroVenda);
+void gerar_relatorio_clientes(FiltroCliente filtroCliente, OpcoesRelatorio opcoes);
+
 void liberar_lista_livros(NodoLivro* lista);
 
 #endif // RELATORIOS_H
