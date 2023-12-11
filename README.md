@@ -3,6 +3,7 @@ Sistema de Gestão para Livraria
 Como compilar o programa:
 gcc cadastro_cliente.c cadastro_livro.c main.c registro_vendas.c relatorios.c validacoes.c -o ProjetoLivraria
 
+Após isso:
 ./ProjetoLivraria
 
 
