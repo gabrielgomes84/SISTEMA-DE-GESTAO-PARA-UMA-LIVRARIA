@@ -1,9 +1,10 @@
+// relatorios.h
 #ifndef RELATORIOS_H
 #define RELATORIOS_H
 
 #include "registro_vendas.h"
 #include "cadastro_livro.h"
-#include "cadastro_cliente.h" // Adicione esta linha para incluir as definições necessárias
+#include "cadastro_cliente.h"
 
 typedef struct {
     char genero[50];
@@ -27,12 +28,12 @@ typedef struct NodoLivro {
     struct NodoLivro* proximo;
 } NodoLivro;
 
-// Adicione a definição da estrutura NodoCliente
 typedef struct NodoCliente {
     Cliente cliente;
     struct NodoCliente* proximo;
 } NodoCliente;
 
+void limpar_tela(void); // Adicione a declaração da função limpar_tela
 void tela_relatorios(void);
 void gerar_relatorio_estoque(FiltroLivro filtroLivro, OpcoesRelatorio opcoes);
 void gerar_relatorio_vendas(FiltroVenda filtroVenda);

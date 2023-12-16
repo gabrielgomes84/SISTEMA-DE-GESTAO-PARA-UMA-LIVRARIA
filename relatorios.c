@@ -6,7 +6,14 @@
 #include "registro_vendas.h"
 #include "cadastro_cliente.h"
 #include "relatorios.h"
-#include <conio.h>
+
+void limpar_tela(void) {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
 
 void liberar_lista_livros(NodoLivro* lista) {
     while (lista != NULL) {
@@ -113,6 +120,8 @@ int comparar_clientes_por_nome(const void* a, const void* b) {
 }
 
 void gerar_relatorio_estoque(FiltroLivro filtroLivro, OpcoesRelatorio opcoes) {
+    limpar_tela();  // Limpar a tela antes de imprimir o relatório
+
     FILE* arquivo = fopen("livros.bin", "rb");
 
     if (arquivo == NULL) {
@@ -154,14 +163,16 @@ void gerar_relatorio_estoque(FiltroLivro filtroLivro, OpcoesRelatorio opcoes) {
 
     printf("------------------------------------------------------------\n");
     printf("Fim do Relatório. Pressione Enter para retornar...");
-    _getch();
+    while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
+    getchar(); // Aguardar a tecla Enter
 }
 
 void gerar_relatorio_vendas(FiltroVenda filtroVenda) {
+    limpar_tela();
     FILE* arquivo = fopen("vendas.bin", "rb");
 
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de vendas.\n");
+        printf("Nenhuma venda para a data informada\n");
         return;
     }
 
@@ -195,10 +206,12 @@ void gerar_relatorio_vendas(FiltroVenda filtroVenda) {
     printf("Vendas atendendo à condição de data: %-4d\n", vendasAtendendoFiltro);
     printf("Fim do Relatório. Pressione Enter para retornar...");
 
-    _getch();
+    while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
+    getchar(); // Aguardar a tecla Enter
 }
 
 void gerar_relatorio_clientes(FiltroCliente filtroCliente, OpcoesRelatorio opcoes) {
+    limpar_tela();
     FILE* arquivo = fopen("clientes.bin", "rb");
 
     if (arquivo == NULL) {
@@ -250,11 +263,12 @@ void gerar_relatorio_clientes(FiltroCliente filtroCliente, OpcoesRelatorio opcoe
     }
 
     printf("Fim do Relatório. Pressione Enter para retornar...");
-    _getch();
+    while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
+    getchar(); // Aguardar a tecla Enter
 }
 
 void tela_relatorios(void) {
-    system("cls"); // Limpar a tela
+    limpar_tela(); // Limpar a tela
 
     printf("//        = = = = = = = = Relatórios = = = = = = = = =              //\n");
     printf("//        1. Relatório de Livros em Estoque                            //\n");
@@ -291,7 +305,7 @@ void tela_relatorios(void) {
 
             // Ler a data
             if (fgets(filtroVenda.data, sizeof(filtroVenda.data), stdin) == NULL) {
-                printf("Erro ao ler a data.\n");
+                printf("Nenhuma venda para a data informada\n");
                 break;
             }
 
@@ -303,6 +317,7 @@ void tela_relatorios(void) {
 
             // Pausar a execução e aguardar a tecla Enter
             printf("Pressione Enter para retornar...");
+            while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
             getchar(); // Aguardar a tecla Enter
 
             break;
