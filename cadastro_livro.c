@@ -121,6 +121,7 @@ void tela_cadastrar_livro_cadastro(void) {
     }
     printf("Pressione Enter para retornar...");
     limparBuffer();
+getchar();
 }
 
 void excluirLivroLogicoPorID() {

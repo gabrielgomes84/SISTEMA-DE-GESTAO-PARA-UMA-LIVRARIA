@@ -38,37 +38,70 @@ void tela_registrar_venda() {
 void registrarUmaVenda() {
     Venda novaVenda;
 
+    // Validar ID da Venda (Números)
     printf("Digite o ID da venda: ");
-    scanf("%d", &novaVenda.id);
-    limparBuffer(); // Limpar o buffer
+    char idStr[20];
+    fgets(idStr, sizeof(idStr), stdin);
+    idStr[strcspn(idStr, "\n")] = '\0'; // Remover a quebra de linha
+    if (!validarNumeros(idStr)) {
+        printf("ID inválido. Digite um número.\n");
+        getchar();
+        return;
+    }
+    novaVenda.id = atoi(idStr);
 
+    // Validar Título do Livro (Letras)
     printf("Digite o título do livro: ");
     fgets(novaVenda.titulo, sizeof(novaVenda.titulo), stdin);
     novaVenda.titulo[strcspn(novaVenda.titulo, "\n")] = '\0'; // Remover a quebra de linha
 
+    // Validar Nome do Autor (Letras)
     printf("Digite o autor do livro: ");
     fgets(novaVenda.autor, sizeof(novaVenda.autor), stdin);
     novaVenda.autor[strcspn(novaVenda.autor, "\n")] = '\0'; // Remover a quebra de linha
+    if (!validarLetras(novaVenda.autor)) {
+        printf("Autor inválido. Digite apenas letras.\n");
+        getchar();
+        return;
+    }
 
+    // Validar Nome do Cliente (Letras)
     printf("Digite o nome do cliente: ");
     fgets(novaVenda.cliente, sizeof(novaVenda.cliente), stdin);
     novaVenda.cliente[strcspn(novaVenda.cliente, "\n")] = '\0'; // Remover a quebra de linha
+    if (!validarLetras(novaVenda.cliente)) {
+        printf("Nome do cliente inválido. Digite apenas letras.\n");
+        getchar();
+        return;
+    }
 
+    // Validar Valor da Venda
     printf("Digite o preço do livro: ");
-    scanf("%f", &novaVenda.preco);
-    limparBuffer(); // Limpar o buffer
+    char precoStr[20];
+    fgets(precoStr, sizeof(precoStr), stdin);
+    precoStr[strcspn(precoStr, "\n")] = '\0'; // Remover a quebra de linha
+    if (!validarPreco(precoStr)) {
+        printf("Preço inválido. Digite um valor numérico válido.\n");
+        getchar();
+        return;
+    }
+    novaVenda.preco = atof(precoStr);
 
     // Solicitar a data sem barras
     printf("Digite a data da venda (DDMMAAAA, sem barras): ");
     scanf("%8s", novaVenda.data);
     limparBuffer(); // Limpar o buffer
 
-    // Alerta ao usuário
-    printf("Aviso: Digite a data sem barras (DDMMAAAA).\n");
-
     printf("Digite a quantidade do livro vendido: ");
-    scanf("%d", &novaVenda.quantidade);
-    limparBuffer(); // Limpar o buffer
+    char quantidadeStr[20];
+    fgets(quantidadeStr, sizeof(quantidadeStr), stdin);
+    quantidadeStr[strcspn(quantidadeStr, "\n")] = '\0'; // Remover a quebra de linha
+    if (!validarNumeros(quantidadeStr)) {
+        printf("Quantidade inválida. Digite um número.\n");
+        getchar();
+        return;
+    }
+    novaVenda.quantidade = atoi(quantidadeStr);
 
     // Abrir o arquivo para escrita binária (modo "ab" para adicionar ao final)
     FILE *arquivo = fopen("vendas.bin", "ab");
@@ -98,8 +131,15 @@ void registrarUmaVenda() {
 void ExcluirPeloID() {
     int idExcluir;
     printf("Digite o ID da venda a ser excluída: ");
-    scanf("%d", &idExcluir);
-    getchar(); // Limpar o buffer
+    char idStr[20];
+    fgets(idStr, sizeof(idStr), stdin);
+    idStr[strcspn(idStr, "\n")] = '\0'; // Remover a quebra de linha
+    if (!validarNumeros(idStr)) {
+        printf("ID inválido. Digite um número.\n");
+        return;
+    }
+    idExcluir = atoi(idStr);
+
 
     // Abrir o arquivo para leitura binária e um arquivo temporário para escrita binária
     FILE *arquivo = fopen("vendas.bin", "rb");

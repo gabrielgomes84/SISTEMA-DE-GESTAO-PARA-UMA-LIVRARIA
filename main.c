@@ -1,3 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////
+///             Universidade Federal do Rio Grande do Norte                 ///
+///                 Centro de Ensino Superior do Seridó                     ///
+///               Departamento de Computação e Tecnologia                   ///
+///                  Disciplina DCT1106 -- Programação                      ///
+///                  Projeto Sistema para uma Livraria                      ///
+///             Developed by Gabriel Gomes -- since 2023                    ///
+///////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -16,14 +24,16 @@ int main() {
         char op;
         system("cls");
         printf("///////////////////////////////////////////////////////////////////////////\n");
+        printf("///              Developed by Gabriel Gomes -- since 2023               ///\n");
+        printf("///////////////////////////////////////////////////////////////////////////\n");
         printf("//                                                                       //\n");
         printf("//        = = = = = = Sistema de Gestão para uma Livraria = = = = = =    //\n");
         printf("//                                                                       //\n");
         printf("//        1. Cadastro de Livros e Produtos                               //\n");
-        printf("//        2. Registro de Vendas de Livros                               //\n");
-        printf("//        3. Cadastro de Clientes                                       //\n");
-        printf("//        4. Relatórios                                                 //\n");
-        printf("//        0. Sair                                                       //\n");
+        printf("//        2. Registro de Vendas de Livros                                //\n");
+        printf("//        3. Cadastro de Clientes                                        //\n");
+        printf("//        4. Relatórios                                                  //\n");
+        printf("//        0. Sair                                                        //\n");
         printf("//                                                                       //\n");
         printf("//        Escolha a opção desejada: ");
         scanf(" %c", &op);
