@@ -11,6 +11,7 @@ typedef struct {
     int status; // Campo para indicar se o registro está excluído (0 para ativo, 1 para excluído logicamente)
 } Cliente;
 
+void limpar_tela(void);
 void tela_cadastrar_cliente();
 void tela_cadastrar_cliente_editar();
 void tela_cadastrar_cliente_pesquisar();

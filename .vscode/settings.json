@@ -9,6 +9,7 @@
         "stdlib.h": "c",
         "validacoes.h": "c",
         "string.h": "c",
-        "registro_vendas.h": "c"
+        "registro_vendas.h": "c",
+        "windows.h": "c"
     }
 }

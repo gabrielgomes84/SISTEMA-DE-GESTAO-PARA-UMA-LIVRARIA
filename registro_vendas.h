@@ -11,9 +11,14 @@ typedef struct {
     int quantidade;
 } Venda;
 
+void limpar_tela(void);
 void registrarUmaVenda(void);
 void ExcluirPeloID(void);
 void ExcluirTodasAsVendas(void);
 void tela_registrar_venda(void);
+
+
+
+
 
 #endif // REGISTRO_VENDAS_H

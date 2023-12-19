@@ -14,6 +14,8 @@ typedef struct {
     int status; // Campo para indicar se o registro está excluído (0 para ativo, 1 para excluído logicamente)
 } Livro;
 
+void limpar_tela(void);
+void tela_relatorios(void);
 void tela_cadastrar_livro(void);
 void tela_cadastrar_livro_cadastro(void);
 void tela_cadastrar_livro_editar(void);

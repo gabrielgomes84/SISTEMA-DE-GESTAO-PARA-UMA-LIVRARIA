@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cadastro_cliente.h"
+#include "relatorios.h"
 
 void cadastrarCliente() {
-    system("cls");
+    limpar_tela();
     printf("= = = = = = Cadastrar Cliente = = = = = = =\n");
     Cliente cliente;
 
@@ -91,7 +92,7 @@ void cadastrarCliente() {
 void tela_cadastrar_cliente() {
     int opcao;
     do {
-        system("cls");
+        limpar_tela();
         printf("= = = = = = Cadastrar Cliente = = = = = = =\n");
         printf("1. Cadastrar cliente\n");
         printf("2. Editar cliente\n");
@@ -133,7 +134,7 @@ void tela_cadastrar_cliente() {
 }
 
 void tela_cadastrar_cliente_editar() {
-    system("cls");
+    limpar_tela();
     printf("= = = = = = Editar Cliente = = = = = = =\n");
 
     char cpf[15];
@@ -166,7 +167,7 @@ void tela_cadastrar_cliente_editar() {
 }
 
 void tela_cadastrar_cliente_pesquisar() {
-    system("cls");
+    limpar_tela();
     printf("= = = = = = Pesquisar Cliente = = = = = = =\n");
 
     char cpf[15];

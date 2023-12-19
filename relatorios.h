@@ -6,6 +6,7 @@
 #include "cadastro_livro.h"
 #include "cadastro_cliente.h"
 
+
 typedef struct {
     char genero[50];
 } FiltroLivro;

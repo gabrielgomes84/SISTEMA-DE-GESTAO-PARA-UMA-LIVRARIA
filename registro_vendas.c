@@ -3,11 +3,14 @@
 #include <string.h>
 #include "registro_vendas.h"
 #include "validacoes.h"
+#include "relatorios.h"
+
+
 
 void tela_registrar_venda() {
     int opcao;
     do {
-        system("cls");
+        limpar_tela();
         printf("= = = = = = Registrar vendas = = = = = = =\n");
         printf("1. Registre uma venda\n");
         printf("2. Excluir uma venda pelo ID\n");

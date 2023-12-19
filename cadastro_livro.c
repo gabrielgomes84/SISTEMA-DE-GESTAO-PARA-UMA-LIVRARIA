@@ -3,11 +3,12 @@
 #include <string.h>
 #include "cadastro_livro.h"
 #include "validacoes.h"
+#include "relatorios.h"
 
 void tela_cadastrar_livro(void) {
     char op;
     do {
-        system("cls");
+        limpar_tela();
         printf("///////////////////////////////////////////////////////////////////////////\n");
         printf("//        = = = = = = = = Cadastrar Livro e Produto = = = = = = = =       //\n");
         printf("1. Cadastrar Livro\n");
@@ -56,7 +57,7 @@ void limparBuffer() {
 }
 
 void tela_cadastrar_livro_cadastro(void) {
-    system("cls");
+    limpar_tela();
     printf("= = = = = = Cadastrar Livro = = = = = = =\n");
     Livro novoLivro;
 
@@ -235,7 +236,7 @@ void carregarLivrosBinario(void) {
 }
 
 void tela_cadastrar_livro_editar(void) {
-    system("cls");
+    limpar_tela();
     printf("= = = = = = Editar Livro = = = = = = =\n");
 
     int idParaEditar;
@@ -313,7 +314,7 @@ void tela_cadastrar_livro_editar(void) {
 
 
 void tela_cadastrar_livro_pesquisar(void) {
-    system("cls");
+    limpar_tela();
     printf("= = = = = = Pesquisar Livro = = = = = = =\n");
 
     int idParaPesquisar;

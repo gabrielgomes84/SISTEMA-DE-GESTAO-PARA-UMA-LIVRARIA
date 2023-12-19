@@ -7,6 +7,7 @@
 #include "cadastro_cliente.h"
 #include "relatorios.h"
 
+
 void limpar_tela(void) {
 #ifdef _WIN32
     system("cls");
@@ -206,7 +207,6 @@ void gerar_relatorio_vendas(FiltroVenda filtroVenda) {
     printf("Vendas atendendo à condição de data: %-4d\n", vendasAtendendoFiltro);
     printf("Fim do Relatório. Pressione Enter para retornar...");
 
-    while (getchar() != '\n'); // Limpar o buffer antes de ler a entrada
     getchar(); // Aguardar a tecla Enter
 }
 
